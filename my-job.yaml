@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pvc-html-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: create-html
+        image: alpine:latest
+        command: ["sh", "-c", "echo '<html><body><h1>Hello, Large Scale Computing!</h1></body></html>' > /usr/share/nginx/html/index.html"]
+        volumeMounts:
+        - name: my-nfs-storage
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: my-nfs-storage
+        persistentVolumeClaim:
+          claimName: dynamic-nfs-storage
+      restartPolicy: Never

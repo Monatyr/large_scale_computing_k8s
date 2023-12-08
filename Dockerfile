@@ -19,6 +19,7 @@ RUN make install
 FROM python:3.8.2-alpine
 
 COPY --from=builder /usr/local/lib/aws-cli /usr/local/lib/aws-cli
+RUN apk update && apk add --no-cache groff
 ENV PATH="/usr/local/lib/aws-cli/bin:$PATH"
 VOLUME "/root/.aws/"
 
